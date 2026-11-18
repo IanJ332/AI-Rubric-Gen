@@ -1,0 +1,5 @@
+[dimensions]
+model = ["gpt", "claude", "gemini"]
+assignment = ["mario-more", "cash", "readability", "dna"]
+reference_context = ["spec-only", "spec-reference"]
+rubric_format = ["points", "levels"]

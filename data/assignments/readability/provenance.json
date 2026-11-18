@@ -1,0 +1,24 @@
+{
+  "assignment_id": "readability",
+  "publisher": "Harvard University, CS50x",
+  "requested_url": "https://cs50.harvard.edu/x/psets/6/readability/",
+  "resolved_url": "https://cs50.harvard.edu/x/psets/6/readability/",
+  "accessed_at_utc": "2026-11-18T18:54:03.350955+00:00",
+  "edition": "CS50x 2026",
+  "selection": "Problem to Solve and Specification; HTML text extracted with paragraph breaks.",
+  "license": "https://cs50.harvard.edu/x/license/",
+  "reference_author": "Codex, authored for this project",
+  "check50_id": "cs50/problems/2026/x/sentimental/readability",
+  "sha256": {
+    "source.html": "efa3e6be8ace640c2066efe200601f0878bc8c90f7808aad6995e2f88fe9fbac",
+    "specification.txt": "aca58c7b061393fa85ab18168cb124e4096483f81ec16268f3c6c5ff59263ad7",
+    "reference.py": "fa6f5206812ff8dc30f7511c88da6d9eef59de4876ea89cbfd7d8ec4c08b48a7"
+  },
+  "requirements": {
+    "letters": "Specification",
+    "words": "Specification",
+    "sentences": "Specification",
+    "index": "Specification",
+    "grade-labels": "Specification"
+  }
+}

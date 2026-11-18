@@ -1,0 +1,24 @@
+{
+  "assignment_id": "cash",
+  "publisher": "Harvard University, CS50x",
+  "requested_url": "https://cs50.harvard.edu/x/psets/6/cash/",
+  "resolved_url": "https://cs50.harvard.edu/x/psets/6/cash/",
+  "accessed_at_utc": "2026-11-18T18:54:03.349111+00:00",
+  "edition": "CS50x 2026",
+  "selection": "Problem to Solve and Specification; HTML text extracted with paragraph breaks.",
+  "license": "https://cs50.harvard.edu/x/license/",
+  "reference_author": "Codex, authored for this project",
+  "check50_id": "cs50/problems/2026/x/sentimental/cash",
+  "sha256": {
+    "source.html": "9e12d38067fd6380ac8f30ee0bf0cd8630f9a47e78c8bca84c4f519b331c63b5",
+    "specification.txt": "9c3f8dd42d7d97c894a024477a2c12ecbc49b6c762bb7031d50a48b07263af69",
+    "reference.py": "e0f468f7a977e8a3815eada4cec84bce2ac53be63c8d5146139d55fa0858caa4"
+  },
+  "requirements": {
+    "negative-reprompt": "Specification",
+    "cents": "Specification",
+    "minimum": "Specification",
+    "remainder": "Specification",
+    "final-line": "Specification"
+  }
+}

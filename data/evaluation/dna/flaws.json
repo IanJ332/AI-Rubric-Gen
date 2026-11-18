@@ -1,0 +1,65 @@
+{
+  "assignment_id": "dna",
+  "flaws": [
+    {
+      "flaw_id": "dna.arity",
+      "requirement_id": "arity",
+      "expected_behavior": "Print error for incorrect argument count",
+      "incorrect_behavior": "Access nonexistent arguments or continue",
+      "test_input": "0, 1, or 3 file arguments",
+      "expected_output": "usage message",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "dna.csv-fields",
+      "requirement_id": "csv-fields",
+      "expected_behavior": "Use STR fields from CSV header",
+      "incorrect_behavior": "Hardcode a different set of STRs",
+      "test_input": "name,CG; Bea,1; Ada,2 / CGCG",
+      "expected_output": "Ada",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "dna.longest-run",
+      "requirement_id": "longest-run",
+      "expected_behavior": "Find longest consecutive run",
+      "incorrect_behavior": "Count all separated occurrences",
+      "test_input": "name,AC; Ada,3; Bea,4 / ACACACGGAC",
+      "expected_output": "Ada",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "dna.exact-profile",
+      "requirement_id": "exact-profile",
+      "expected_behavior": "Match every STR count",
+      "incorrect_behavior": "Accept first partial match",
+      "test_input": "name,AC,GT; Bea,2,2; Ada,2,1 / ACACGT",
+      "expected_output": "Ada",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "dna.no-match",
+      "requirement_id": "no-match",
+      "expected_behavior": "Print No match when no profile matches",
+      "incorrect_behavior": "Print a name or nothing",
+      "test_input": "name,AC,GT; Ada,1,2 / ACACGT",
+      "expected_output": "No match",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    }
+  ]
+}

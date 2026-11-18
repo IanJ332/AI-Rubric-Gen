@@ -1,0 +1,65 @@
+{
+  "assignment_id": "cash",
+  "flaws": [
+    {
+      "flaw_id": "cash.negative-reprompt",
+      "requirement_id": "negative-reprompt",
+      "expected_behavior": "Reject negative inputs and reprompt",
+      "incorrect_behavior": "Accept negative amount",
+      "test_input": "-1, -0.25, 0.50",
+      "expected_output": "2",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "cash.cents",
+      "requirement_id": "cents",
+      "expected_behavior": "Convert 0.29 dollars to 29 cents accurately",
+      "incorrect_behavior": "Truncate binary float to 28 cents",
+      "test_input": "0.29",
+      "expected_output": "5",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "cash.minimum",
+      "requirement_id": "minimum",
+      "expected_behavior": "Use minimum number of coins",
+      "incorrect_behavior": "Return five dimes instead of two quarters",
+      "test_input": "0.50",
+      "expected_output": "2",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "cash.remainder",
+      "requirement_id": "remainder",
+      "expected_behavior": "Include the penny remaining after 25, 10 and 5 cents",
+      "incorrect_behavior": "Omit the remaining penny",
+      "test_input": "0.41",
+      "expected_output": "4",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "cash.final-line",
+      "requirement_id": "final-line",
+      "expected_behavior": "Print integer and newline as final line",
+      "incorrect_behavior": "Print 1 coin instead of 1",
+      "test_input": "0.01",
+      "expected_output": "1",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    }
+  ]
+}

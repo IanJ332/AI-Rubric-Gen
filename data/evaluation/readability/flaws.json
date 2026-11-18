@@ -1,0 +1,65 @@
+{
+  "assignment_id": "readability",
+  "flaws": [
+    {
+      "flaw_id": "readability.letters",
+      "requirement_id": "letters",
+      "expected_behavior": "Count only ASCII letters",
+      "incorrect_behavior": "Count the digits as letters",
+      "test_input": "Green birds fly high above lakes 1234567890.",
+      "expected_output": "Grade 3",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "readability.words",
+      "requirement_id": "words",
+      "expected_behavior": "Count space separated words",
+      "incorrect_behavior": "Split apostrophe into two words",
+      "test_input": "Don't stop looking around the garden.",
+      "expected_output": "Grade 9",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "readability.sentences",
+      "requirement_id": "sentences",
+      "expected_behavior": "Count period, exclamation and question marks",
+      "incorrect_behavior": "Count only periods",
+      "test_input": "Bright stars! Silver moons? Lanterns shine.",
+      "expected_output": "Grade 4",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "readability.index",
+      "requirement_id": "index",
+      "expected_behavior": "Calculate index and round to nearest integer",
+      "incorrect_behavior": "Truncate 6.7067 to 6",
+      "test_input": "Bright stars shine above the lake.",
+      "expected_output": "Grade 7",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    },
+    {
+      "flaw_id": "readability.grade-labels",
+      "requirement_id": "grade-labels",
+      "expected_behavior": "Render grade boundary labels",
+      "incorrect_behavior": "Print numeric grade at either boundary",
+      "test_input": "Small cats nap. / Extraordinary discoveries inspire curiosity.",
+      "expected_output": "Before Grade 1 / Grade 16+",
+      "evidence": "tests/test_remaining_assignments.py",
+      "status": "mutant_tested_pending_human_review",
+      "mutation_evidence": "data/evaluation/mutation/results.json",
+      "independence_note": "See cross-case matrix; conceptual independence requires researcher review."
+    }
+  ]
+}

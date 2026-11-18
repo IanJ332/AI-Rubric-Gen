@@ -1,0 +1,60 @@
+{
+  "assignment_id": "mario-more",
+  "flaws": [
+    {
+      "flaw_id": "mario-more.height",
+      "requirement_id": "height",
+      "expected_behavior": "For input 9 followed by 2, prompt twice and print height 2.",
+      "incorrect_behavior": "Fails to reject an out-of-range height and re-prompt.",
+      "test_input": "9\n2\n",
+      "expected_output": " #  #\n##  ##\n",
+      "counterexample": "accepts 9 as height",
+      "evidence": "tests/test_dataset.py::test_flaw_evidence",
+      "status": "technically_validated_pending_human_review"
+    },
+    {
+      "flaw_id": "mario-more.growth",
+      "requirement_id": "growth",
+      "expected_behavior": "For height 2, print two rows with one then two hashes per side.",
+      "incorrect_behavior": "Prints an incorrect number of rows or block growth.",
+      "test_input": "2\n",
+      "expected_output": " #  #\n##  ##\n",
+      "counterexample": " ##  ##\n##  ##\n",
+      "evidence": "tests/test_dataset.py::test_flaw_evidence",
+      "status": "technically_validated_pending_human_review"
+    },
+    {
+      "flaw_id": "mario-more.alignment",
+      "requirement_id": "alignment",
+      "expected_behavior": "For height 2, the first row starts with one space and the bottom row starts at the left edge.",
+      "incorrect_behavior": "Fails to right-align the left pyramid.",
+      "test_input": "2\n",
+      "expected_output": " #  #\n##  ##\n",
+      "counterexample": "#  #\n##  ##\n",
+      "evidence": "tests/test_dataset.py::test_flaw_evidence",
+      "status": "technically_validated_pending_human_review"
+    },
+    {
+      "flaw_id": "mario-more.gap",
+      "requirement_id": "gap",
+      "expected_behavior": "For height 2, exactly two spaces separate each pair of blocks.",
+      "incorrect_behavior": "Prints an incorrect gap between pyramids.",
+      "test_input": "2\n",
+      "expected_output": " #  #\n##  ##\n",
+      "counterexample": " # #\n## ##\n",
+      "evidence": "tests/test_dataset.py::test_flaw_evidence",
+      "status": "technically_validated_pending_human_review"
+    },
+    {
+      "flaw_id": "mario-more.format",
+      "requirement_id": "format",
+      "expected_behavior": "For height 1, the output row ends immediately after the last hash and then a newline.",
+      "incorrect_behavior": "Adds trailing spaces or omits required row line breaks.",
+      "test_input": "1\n",
+      "expected_output": "#  #\n",
+      "counterexample": "#  # \n",
+      "evidence": "tests/test_dataset.py::test_flaw_evidence",
+      "status": "technically_validated_pending_human_review"
+    }
+  ]
+}

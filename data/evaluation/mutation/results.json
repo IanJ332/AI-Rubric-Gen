@@ -1,0 +1,578 @@
+{
+  "cash.reference": [
+    {
+      "pass": true,
+      "stdout": "2\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "5\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "2\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "4\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "1\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "cash.negative-reprompt": [
+    {
+      "pass": false,
+      "stdout": "-4\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "5\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "2\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "4\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "1\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "cash.cents": [
+    {
+      "pass": true,
+      "stdout": "2\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "4\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "2\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "4\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "1\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "cash.minimum": [
+    {
+      "pass": false,
+      "stdout": "5\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "7\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "5\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "5\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "1\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "cash.remainder": [
+    {
+      "pass": true,
+      "stdout": "2\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "1\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "2\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "3\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "0\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "cash.final-line": [
+    {
+      "pass": false,
+      "stdout": "2 coins\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "5 coins\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "2 coins\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "4 coins\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "1 coins\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "readability.reference": [
+    {
+      "pass": true,
+      "stdout": "Grade 3\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 9\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 4\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 7\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Before Grade 1\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "readability.letters": [
+    {
+      "pass": false,
+      "stdout": "Grade 11\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 9\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 4\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 7\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Before Grade 1\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "readability.words": [
+    {
+      "pass": true,
+      "stdout": "Grade 3\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Grade 5\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 4\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 7\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Before Grade 1\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "readability.sentences": [
+    {
+      "pass": true,
+      "stdout": "Grade 3\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 9\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Grade 14\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 7\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Before Grade 1\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "readability.index": [
+    {
+      "pass": false,
+      "stdout": "Grade 2\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Grade 8\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Grade 3\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Grade 6\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Before Grade 1\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "readability.grade-labels": [
+    {
+      "pass": true,
+      "stdout": "Grade 3\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 9\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 4\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Grade 7\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Grade -2\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "dna.reference": [
+    {
+      "pass": true,
+      "stdout": "Usage: python dna.py database.csv sequence.txt\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "No match\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "dna.arity": [
+    {
+      "pass": false,
+      "stdout": "",
+      "returncode": 1,
+      "stderr": "0000gn/T/tmpao62o4js/dna.py\", line 35, in <module>\n    main()\n    ~~~~^^\n  File \"/var/folders/zs/k8kk_38x1bsf2rs66y5bxwl00000gn/T/tmpao62o4js/dna.py\", line 20, in main\n    with open(sys.argv[1], newline='', encoding='utf-8') as database:\n              ~~~~~~~~^^^\nIndexError: list index out of range\n"
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "No match\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "dna.csv-fields": [
+    {
+      "pass": true,
+      "stdout": "Usage: python dna.py database.csv sequence.txt\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Bea\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Bea\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "dna.longest-run": [
+    {
+      "pass": true,
+      "stdout": "Usage: python dna.py database.csv sequence.txt\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Bea\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "No match\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "dna.exact-profile": [
+    {
+      "pass": true,
+      "stdout": "Usage: python dna.py database.csv sequence.txt\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "Bea\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "No match\n",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ],
+  "dna.no-match": [
+    {
+      "pass": true,
+      "stdout": "Usage: python dna.py database.csv sequence.txt\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": true,
+      "stdout": "Ada\n",
+      "returncode": 0,
+      "stderr": ""
+    },
+    {
+      "pass": false,
+      "stdout": "",
+      "returncode": 0,
+      "stderr": ""
+    }
+  ]
+}

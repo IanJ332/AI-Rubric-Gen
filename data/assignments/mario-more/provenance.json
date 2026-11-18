@@ -1,0 +1,24 @@
+{
+  "assignment_id": "mario-more",
+  "publisher": "Harvard University, CS50x",
+  "requested_url": "https://cs50.harvard.edu/x/2026/psets/6/mario/more/",
+  "resolved_url": "https://cs50.harvard.edu/x/psets/6/mario/more/",
+  "redirect_status": 302,
+  "accessed_at_utc": "2026-11-18T06:38:58.283252+00:00",
+  "edition": "CS50x 2026",
+  "selection": "Problem to Solve, Specification, and How to Test through examples; HTML text extracted, markup omitted.",
+  "license": "https://cs50.harvard.edu/x/license/",
+  "reference_author": "Codex, authored for this project",
+  "sha256": {
+    "source.html": "ca0a93a27378c26f0b4a1557f9135086c4b5a780f3f9a57c2aac2f3c5428dbc6",
+    "specification.txt": "d8138641509ae33dfd2f489206b0717831f6174a10cc0ead554d6251e9998bde",
+    "reference.py": "a4ab0ea393080e353b2c1581b5efbdea8e103c7acce0ab714ece8e10543f0b84"
+  },
+  "requirements": {
+    "height": "Specification, first and second bullets",
+    "growth": "Problem to Solve, Specification third bullet, and How to Test examples",
+    "alignment": "Specification fourth bullet and How to Test examples",
+    "gap": "Specification first and fourth bullets",
+    "format": "Specification fourth bullet and How to Test examples"
+  }
+}

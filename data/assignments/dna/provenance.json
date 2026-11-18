@@ -1,0 +1,26 @@
+{
+  "assignment_id": "dna",
+  "publisher": "Harvard University, CS50x",
+  "requested_url": "https://cs50.harvard.edu/x/psets/6/dna/",
+  "resolved_url": "https://cs50.harvard.edu/x/psets/6/dna/",
+  "accessed_at_utc": "2026-11-18T18:54:03.351463+00:00",
+  "edition": "CS50x 2026",
+  "selection": "Problem to Solve and Specification; HTML text extracted with paragraph breaks.",
+  "license": "https://cs50.harvard.edu/x/license/",
+  "reference_author": "Codex, authored for this project",
+  "check50_id": "cs50/problems/2026/x/dna",
+  "sha256": {
+    "source.html": "d501c60b9edef23adfaa196f233ee19899a2ee0de1e7513ce11a361cea4610e0",
+    "specification.txt": "0c8095dd1a2954f5d20fedf14b3445289b21968fdf566347eacbc65ce7a0b902",
+    "reference.py": "b71d5742a13fbf8e4869dcd5e39133c6df7c7c71b6b7ec3513dba9f27f8fa09f",
+    "starter.zip": "b18b902db5e971a87c8d8066927f8e3636c634ff4fa8e01e168667ae83c04060"
+  },
+  "requirements": {
+    "arity": "Specification",
+    "csv-fields": "Specification",
+    "longest-run": "Specification",
+    "exact-profile": "Specification",
+    "no-match": "Specification"
+  },
+  "starter_url": "https://cdn.cs50.net/2026/x/psets/6/dna.zip"
+}
