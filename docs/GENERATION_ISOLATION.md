@@ -1,9 +1,9 @@
-# Rubric 生成隔离规则
+# Rubric Generation Isolation Rules
 
-所有正式或开发生成请求只允许使用该条件的已校验 CS50 作业规格、可选参考实现和项目中明确版本化的 prompt。生成调用不得加载本机 skills、个人偏好、聊天历史、个人指令或用户配置。模型请求不得提供 shell、文件系统、浏览器、MCP 或其他工具；每题使用独立的无状态请求。
+All formal and development generation requests may use only the validated CS50 assignment specification for the condition, an optional reference implementation, and prompts explicitly versioned in the project. Generation calls must not load local skills, personal preferences, chat history, personal instructions, or user configuration. Model requests must not provide shell, filesystem, browser, MCP, or other tools; each assignment uses a separate stateless request.
 
-`python -m rubric_benchmark.luna_run --output <新目录>` 使用固定的 OpenAI Responses API 地址、显式 system 指令、`tools: []` 和 `store: false`。它仅读取 `OPENAI_API_KEY` 作为认证凭据，不使用 Codex CLI 或 Codex 用户配置。找不到凭据时，在创建输出目录或发送请求前失败。实际返回模型 ID、输入及响应哈希应保存在 manifest 中。生成请求不包含评估缺陷清单。
+`python -m rubric_benchmark.luna_run --output <new-directory>` uses a fixed OpenAI Responses API endpoint, explicit system instructions, `tools: []`, and `store: false`. It reads only `OPENAI_API_KEY` for authentication and does not use the Codex CLI or Codex user configuration. If credentials are missing, it fails before creating the output directory or sending a request. The actual returned model ID and input and response hashes should be saved in the manifest. Generation requests do not include the evaluation flaw lists.
 
-`run_smoke` 的可注入 callable 是开发辅助接口；它不限制调用者的能力，不能用于声称满足本规则的模型生成。调用方必须使用能证明相同隔离条件的适配器。
+The injectable callable in `run_smoke` is a development aid; it does not restrict the caller's capabilities and cannot support a claim that model generation meets these rules. Callers must use an adapter that can demonstrate the same isolation conditions.
 
-早期 Codex CLI 测试读取了本机 skill，相关输出已删除，不满足本规则。完成真正的隔离调用需要可用的 API 凭据和支持指定模型的 Responses API 部署；请求的模型和实际返回模型必须分别记录。
+Early Codex CLI tests read a local skill; the associated outputs were deleted and did not meet these rules. A truly isolated call requires valid API credentials and a Responses API deployment supporting the specified model; the requested and actual returned models must be recorded separately.

@@ -1,119 +1,119 @@
-# CS50x 2026 rubric benchmark 实施方案
+# CS50x 2026 Rubric Benchmark Implementation Plan
 
-范围为 Problem Set 6 的 Python **Cash、Readability、DNA**。完成标准是三项作业均可通过同一个生成入口运行，沿用现有四项作业的 48 个实验条件。本文给出资料清单、输入合同、15 项候选缺陷、验证用例及执行门槛。方案中的文件、命令和 API 请求均属于后续实施。
+Scope: Python **Cash, Readability, and DNA** from Problem Set 6. Completion means all three assignments run through the same generation entry point, using the existing 48 conditions across four assignments. This plan describes sources, input contracts, 15 candidate flaws, validation cases, and execution gates. Files, commands, and API requests in the plan are future implementation work.
 
-## 1. 资料来源与使用
+## 1. Sources and use
 
-| 资料 | 在工程中的用途 |
-| --- | --- |
-| 用户提供的 *Harvard CS50x 2026 Assignments*，第 4–5 页 | 定位 Problem Set 6 的三个 Python 版本。Cash 在 PSet 1 也有同名 C 题，Readability 在 PSet 2 也有同名 C 题，归档时用版本和 Python 文件名复核。 |
-| [CS50x 2026 Problem Set 6](https://cs50.harvard.edu/x/psets/6/) 和三题官方页面 | 作业要求、术语、输入输出和官方测试的依据。分别归档作业页面，保留版本标识、抓取时间及哈希。 |
-| [Week 6 讲义](https://cs50.harvard.edu/x/notes/6/) | 核对 Python 教学背景。讲义示范只供研究者理解课程，不转化为评分条件。 |
-| Check-in #2，第 2–3 页 | 确定四因素、每题五项缺陷、每格一次正式生成、两名研究者独立标注。 |
-| 用户提供的 *CS500 Check-in 2 Research Dossier*，第 5–11 页 | 采用同题同字节、预先冻结缺陷、验证单一可观察错误、记录有效替代实现和模型版本等建议。按 Check-in #2 执行 rubric 文本覆盖研究。 |
+| Source | Project use |
+|---|---|
+| User-provided *Harvard CS50x 2026 Assignments*, pp. 4–5 | Locate the three Python versions in Problem Set 6. Cash also has a C assignment in PSet 1 and Readability in PSet 2; verify edition and Python filenames when archiving. |
+| [CS50x 2026 Problem Set 6](https://cs50.harvard.edu/x/psets/6/) and the three official assignment pages | Authority for requirements, terminology, input/output, and official tests. Archive each page with edition, retrieval time, and hash. |
+| [Week 6 notes](https://cs50.harvard.edu/x/notes/6/) | Check Python teaching context. Examples aid researcher understanding and do not become grading criteria. |
+| Check-in #2, pp. 2–3 | Establish four factors, five flaws per assignment, one formal generation per cell, and independent annotation by two researchers. |
+| User-provided *CS500 Check-in 2 Research Dossier*, pp. 5–11 | Adopt recommendations on identical bytes per assignment, freezing flaws in advance, validating a single observable error, and recording valid alternatives and model versions. Follow Check-in #2 for rubric-text coverage. |
 
-优先读取各题官方页面的 `Problem to Solve`、`Specification` 和 `How to Test`。DNA 另外归档官方 [2026 starter ZIP](https://cdn.cs50.net/2026/x/psets/6/dna.zip)，验证其中的 `dna.py`、`databases/`、`sequences/`，记录归档与采用文件的 SHA-256。获取课程资料时保留 Harvard 署名、来源、改动说明及许可链接，并单独记录 ZIP 内文件附带的许可或来源说明。公开分发前复核各材料的适用条款。 [CS50x 许可](https://cs50.harvard.edu/x/license/)
+Read each official page's `Problem to Solve`, `Specification`, and `How to Test` first. For DNA also archive the official [2026 starter ZIP](https://cdn.cs50.net/2026/x/psets/6/dna.zip), verify its `dna.py`, `databases/`, and `sequences/`, and record SHA-256 hashes for the archive and files used. Retain Harvard attribution, source, change descriptions, and license links with course materials, and separately record any license or provenance notices included in the ZIP. Review applicable terms before public distribution. [CS50x license](https://cs50.harvard.edu/x/license/)
 
-### 数据包与 prompt 边界
+### Data package and prompt boundary
 
-沿用 [Mario 的目录、字段和校验方式](../data/assignments/mario-more/provenance.json)。最初实现中直接复用 `load_generation_input`。
+Follow [Mario's directory, fields, and validation](../data/assignments/mario-more/provenance.json). Reuse `load_generation_input` directly in the initial implementation.
 
-| 计划路径 | 内容及消费方 |
-| --- | --- |
-| `data/assignments/<id>/source.html` | 官方原始页面。供溯源与人工审阅。 |
-| `data/assignments/<id>/specification.txt` | 给 LLM 的唯一课程文本，UTF-8、LF、保留有语义的空白和标点。 |
-| `data/assignments/<id>/reference.py` | 团队编写、按官方用例验证的一个 Python 示例。在 `spec-reference` 条件下按冻结字节加入。 |
-| `data/assignments/<id>/provenance.json` | 沿用 `assignment_id`、`publisher`、`requested_url`、`resolved_url`、`redirect_status`、`accessed_at_utc`、`edition`、`selection`、`license`、`reference_author`、`sha256` 和 `requirements`。增记官方检查 ID、提取规则版本、参考运行环境及 DNA starter 来源。 |
-| `data/evaluation/<id>/flaws.json`、`evidence.json`、`fixtures/` | 每题五项稳定缺陷 ID、要求 ID、预期与错误行为、用例和证据位置、状态、复核记录。官方用例、靶向用例和正确替代实现的证据在此侧归档。 |
+| Planned path | Content and consumer |
+|---|---|
+| `data/assignments/<id>/source.html` | Original official page for provenance and human review. |
+| `data/assignments/<id>/specification.txt` | Only course text given to the LLM; UTF-8, LF, preserving meaningful whitespace and punctuation. |
+| `data/assignments/<id>/reference.py` | One team-authored Python example validated against official cases. Include frozen bytes under `spec-reference`. |
+| `data/assignments/<id>/provenance.json` | Retain `assignment_id`, `publisher`, `requested_url`, `resolved_url`, `redirect_status`, `accessed_at_utc`, `edition`, `selection`, `license`, `reference_author`, `sha256`, and `requirements`. Add official check ID, extraction rule version, reference runtime environment, and DNA starter provenance. |
+| `data/evaluation/<id>/flaws.json`, `evidence.json`, `fixtures/` | Five stable flaw IDs per assignment, requirement IDs, expected and incorrect behavior, case and evidence locations, status, and review records. Archive evidence from official and targeted cases and correct alternatives here. |
 
-**建议冻结的文本规则**：四题统一将官方 `Problem to Solve` 和 `Specification` 提取到 prompt。官方 `How to Test`、讲义、安装步骤、DNA ZIP 及自制用例用于验证。DNA 在规格块里保留官方关于 `longest_match` 的说明。当前 Mario 开发版包含测试示例，若团队采用此规则，在正式冻结时用同一规则重建 Mario 的 `specification.txt` 和哈希，保留原开发快照及变更记录。团队在 pilot 前复核四题均使用同一提取规则。
+**Recommended text rule for freezing:** Extract official `Problem to Solve` and `Specification` into the prompt consistently for all four assignments. Use official `How to Test`, notes, installation steps, DNA ZIP, and custom cases for validation. Retain the official `longest_match` explanation in DNA's specification block. The current Mario development version includes test examples; if the team adopts this rule, rebuild Mario's `specification.txt` and hash using the same rule at formal freeze, retaining the original development snapshot and change record. Before the pilot, the team verifies that all four use the same extraction rule.
 
-每个数据包先验收当前页面明确标示 CS50x 2026、实际跳转及哈希，然后逐段核对提取文本。保留标题、公式、输出字面量、源代码符号和原有条件。生成进程只读校验后的规格和可选参考，离线预检负责核查其他材料及清单摘要。
+First accept each package's explicit CS50x 2026 edition label, actual redirect, and hashes, then compare extracted text paragraph by paragraph. Preserve headings, formulas, output literals, source symbols, and original conditions. The generation process reads only validated specifications and optional references; offline preflight checks other materials and manifest digests.
 
-## 2. 各题工程任务
+## 2. Assignment engineering tasks
 
-### Cash · `cash`
+### Cash
 
-**规格与参考。** 在官方路径 `sentimental-cash/cash.py` 上验证。参考使用 CS50 `get_float` 读美元金额，重复拒绝负值，接受零。将两位以内的有效小数金额转换为整数美分，按 25、10、5、1 美分求最小硬币数。参考可以使用 `divmod` 并保留每一步余量，最后一行输出整数和换行。评分以行为为准，允许符合规格的其他策略。规格未指定不足一美分的舍入约定。 [Cash 官方规格与用例](https://cs50.harvard.edu/x/psets/6/cash/)
+**Specification and reference.** Validate at the official path `sentimental-cash/cash.py`. The reference uses CS50 `get_float` to read dollars, repeatedly rejects negative values, and accepts zero. Convert valid amounts with at most two decimal places to integer cents and find the minimum number of 25, 10, 5, and 1 cent coins. The reference may use `divmod`, retaining each remainder, and prints an integer and newline on the last line. Grade behavior and accept other compliant strategies. The specification does not prescribe sub-cent rounding. [Official Cash specification and cases](https://cs50.harvard.edu/x/psets/6/cash/)
 
-| 候选 flaw ID | 验证输入与正确行为 | 区分的错误 |
-| --- | --- | --- |
-| `cash.negative-reprompt` | 依次给出 `-1`、`-0.25`、`0.50`，读取三次，最后输出 `2\n`。 | 接受负数、在负数时停止，或只允许重试一次。 |
-| `cash.cents` | `0.29` 按 29¢ 计算，输出 `5\n`。 | 直接截断二进制浮点乘积得到 28¢，输出 `4\n`。 |
-| `cash.minimum` | `0.50` 输出 `2\n`。此用例可整除，无剩余分币。 | 以五枚 10¢ 凑出正确总额，未用最少枚数。 |
-| `cash.remainder` | 官方 `0.41` 输出 `4\n`，可行组合为 25+10+5+1。 | 前三种硬币正确后遗漏最后 1¢，输出 `3\n`。 |
-| `cash.final-line` | `0.01` 的最后一行是 `1\n`，可有先前的提示。 | 数值正确但末行写成 `1 coin\n`，或缺少结尾换行。 |
+| Candidate flaw ID | Validation input and correct behavior | Distinguished error |
+|---|---|---|
+| `cash.negative-reprompt` | Input `-1`, `-0.25`, `0.50` in order; read three times and finally output `2\n`. | Accepting a negative, stopping on a negative, or allowing only one retry. |
+| `cash.cents` | Calculate `0.29` as 29¢ and output `5\n`. | Directly truncating the binary floating-point product to 28¢ and outputting `4\n`. |
+| `cash.minimum` | `0.50` outputs `2\n`. This case divides evenly with no penny remainder. | Using five 10¢ coins to reach the correct total without minimizing the count. |
+| `cash.remainder` | Official `0.41` outputs `4\n`; a valid combination is 25+10+5+1. | Omitting the last 1¢ after the first three denominations and outputting `3\n`. |
+| `cash.final-line` | The last line for `0.01` is `1\n`; earlier prompts are allowed. | Correct value but last line is `1 coin\n` or lacks a final newline. |
 
-**验证。** 用 `get_float` stub 测负数重试次数和有效零。真实 CS50 库再跑非数字、空行后给合法输入的交互用例，区分库的解析行为和程序的非负约束。执行官方所有示例，包括 `0.15 → 2`、`1.60 → 7`、`23 → 92`、`4.2 → 18`。对人工用例用独立的整数最小硬币计算复核。官方检查 ID 为 `cs50/problems/2026/x/sentimental/cash`。
+**Validation.** Use a `get_float` stub to test negative retry counts and valid zero. With the real CS50 library, also test nonnumeric input and a blank line followed by valid input, distinguishing library parsing from the program's nonnegative constraint. Run all official examples, including `0.15 → 2`, `1.60 → 7`, `23 → 92`, and `4.2 → 18`. Independently check custom cases with an integer minimum-coin calculation. Official check ID: `cs50/problems/2026/x/sentimental/cash`.
 
-### Readability · `readability`
+### Readability
 
-**规格与参考。** 在 `sentimental-readability/readability.py` 上验证。使用 CS50 `get_string`，统计 ASCII 字母、以空格分隔的词，以及 `.`、`!`、`?`。设字母数、词数、句子数为 `a, w, s`，则 `L = 100*a/w`、`S = 100*s/w`，指数为 `0.0588*L - 0.296*S - 15.8`。按官方规则取最近整数，输出 `Grade X`、`Grade 16+` 或 `Before Grade 1`。认可字符判断、正则或等价计数方法。 [Readability 官方规格与用例](https://cs50.harvard.edu/x/psets/6/readability/)
+**Specification and reference.** Validate at `sentimental-readability/readability.py`. Use CS50 `get_string`; count ASCII letters, space-delimited words, and `.`, `!`, `?`. With letters, words, and sentences `a, w, s`, calculate `L = 100*a/w`, `S = 100*s/w`, and index `0.0588*L - 0.296*S - 15.8`. Round to the nearest integer under the official rule and output `Grade X`, `Grade 16+`, or `Before Grade 1`. Accept character checks, regular expressions, or equivalent counting methods. [Official Readability specification and cases](https://cs50.harvard.edu/x/psets/6/readability/)
 
-| 候选 flaw ID | 验证输入、计数 `(a,w,s)` 与期望输出 | 区分的错误 |
-| --- | --- | --- |
-| `readability.letters` | `Green birds fly high above lakes 1234567890.` → `(27,7,1)` → `Grade 3`。 | 把数字算成字母会输出 `Grade 11`。另加含非 ASCII 字母的用例复核范围。 |
-| `readability.words` | `Don't stop looking around the garden.` → `(30,6,1)` → `Grade 9`。 | 把 `Don't` 拆成两个词会输出 `Grade 5`。 |
-| `readability.sentences` | `Bright stars! Silver moons? Lanterns shine.` → `(35,6,3)` → `Grade 4`。 | 只识别句号会输出 `Grade 14`。 |
-| `readability.index` | `Bright stars shine above the lake.` → `(28,6,1)`，原始指数约 `6.7067`，输出 `Grade 7`。 | 截断得到 `Grade 6`，漏掉每百词归一化得到 `Before Grade 1`。归为同一指数计算与取整项。 |
-| `readability.grade-labels` | `Small cats nap.` → `Before Grade 1`，`Extraordinary discoveries inspire curiosity.` → `Grade 16+`。 | 对低端或高端直接输出数值等级，或使用错误标签。 |
+| Candidate flaw ID | Validation input, counts `(a,w,s)`, and expected output | Distinguished error |
+|---|---|---|
+| `readability.letters` | `Green birds fly high above lakes 1234567890.` → `(27,7,1)` → `Grade 3`. | Counting digits as letters produces `Grade 11`. Add a case with non-ASCII letters to check the range. |
+| `readability.words` | `Don't stop looking around the garden.` → `(30,6,1)` → `Grade 9`. | Splitting `Don't` into two words produces `Grade 5`. |
+| `readability.sentences` | `Bright stars! Silver moons? Lanterns shine.` → `(35,6,3)` → `Grade 4`. | Recognizing only periods produces `Grade 14`. |
+| `readability.index` | `Bright stars shine above the lake.` → `(28,6,1)`, raw index approximately `6.7067`, output `Grade 7`. | Truncation gives `Grade 6`; omitting per-100-word normalization gives `Before Grade 1`. Group both under index calculation and rounding. |
+| `readability.grade-labels` | `Small cats nap.` → `Before Grade 1`; `Extraordinary discoveries inspire curiosity.` → `Grade 16+`. | Printing numerical grades at the low or high end or using incorrect labels. |
 
-**验证。** 跑官方全部输入文本和输出，另对合成用例用手算或精确有理数独立算出计数、原始指数和标签。覆盖 ASCII 范围、句子标点、普通等级及两端等级。若要用跨阈值舍入的例子，先对照官方文字、[所引用的 PSet 2 说明](https://cs50.harvard.edu/x/psets/2/readability/) 和能取得的 2026 Python 检查，分别记录原始指数与取整后等级。正式缺陷用例采用远离阈值的上述两端例子。空输入、连续空格及恰好半整数的行为在官方证据未明确前作为研究者备注。官方检查 ID 为 `cs50/problems/2026/x/sentimental/readability`。
+**Validation.** Run all official input texts and outputs. Independently calculate counts, raw indices, and labels for synthetic cases by hand or exact rational arithmetic. Cover ASCII range, sentence punctuation, ordinary grades, and both ends of the scale. Before using rounding examples that cross a threshold, compare official wording, [the referenced PSet 2 description](https://cs50.harvard.edu/x/psets/2/readability/), and available 2026 Python checks; record both raw index and rounded grade. Use the above end cases away from thresholds as formal flaw cases. Keep empty input, consecutive spaces, and exact half-integer behavior as researcher notes until official evidence is clear. Official check ID: `cs50/problems/2026/x/sentimental/readability`.
 
-### DNA · `dna`
+### DNA
 
-**规格与参考。** 在 `dna/dna.py` 上验证。按 CSV 在前、序列文本在后的顺序接收两个文件路径，其余参数数量打印错误。正确参数数量下，官方允许假设两个文件都有效。读取 CSV 表头，以 `name` 后的字段确定要比较的 STR。对每个字段计算最长连续重复次数，对同一人的所有字段做精确匹配，输出姓名或 `No match`。以官方 starter 为参考实现起点，记录 `longest_match` 来源，归档为单文件可运行的参考。允许功能等价的解析和实现。 [DNA 官方规格与用例](https://cs50.harvard.edu/x/psets/6/dna/)
+**Specification and reference.** Validate at `dna/dna.py`. Accept two file paths, CSV first and sequence text second; print an error for any other argument count. With the correct count, the official task permits assuming both files are valid. Read the CSV header and use fields after `name` to determine the STRs to compare. Compute the longest consecutive run for each field, exactly match all fields for one person, and print the name or `No match`. Start the reference from the official starter, record the origin of `longest_match`, and archive a runnable single-file reference. Accept functionally equivalent parsing and implementations. [Official DNA specification and cases](https://cs50.harvard.edu/x/psets/6/dna/)
 
-下表用 `/` 分隔 CSV 的行。实施时写成真实的 CSV 和文本文件。
+The table uses `/` to separate CSV rows. Write real CSV and text files during implementation.
 
-| 候选 flaw ID | 验证输入与正确行为 | 区分的错误 |
-| --- | --- | --- |
-| `dna.arity` | 分别以 0、1、3 个文件参数运行，均打印错误并结束。以 2 个有效文件路径验证正常分支。 | 错误个数触发未处理异常，或继续访问参数。错误文案由作者选择。 |
-| `dna.csv-fields` | CSV `name,CG / Ada,2 / Bea,1`，文本 `CGCG`，输出 `Ada`。再用官方大小数据库覆盖不同列数。 | 写死某套 STR 列，或依赖特定的官方数据库形状。 |
-| `dna.longest-run` | CSV `name,AC / Ada,3 / Bea,4`，文本 `ACACACGGAC`，输出 `Ada`。 | 累加分隔出现的次数得到 4，误报 `Bea`。 |
-| `dna.exact-profile` | CSV `name,AC,GT / Bea,2,2 / Ada,2,1`，文本 `ACACGT`，输出 `Ada`。 | 前一行仅首个字段相同，若接受部分匹配会误报 `Bea`。 |
-| `dna.no-match` | CSV `name,AC,GT / Ada,1,2`，文本 `ACACGT`，输出 `No match`。 | 无匹配时静默结束、输出错误文案或返回某人姓名。 |
+| Candidate flaw ID | Validation input and correct behavior | Distinguished error |
+|---|---|---|
+| `dna.arity` | Run with 0, 1, and 3 file arguments; each prints an error and exits. Verify the normal branch with 2 valid paths. | Incorrect counts cause an unhandled exception or continued argument access. The author chooses the error text. |
+| `dna.csv-fields` | CSV `name,CG / Ada,2 / Bea,1`, text `CGCG`, output `Ada`. Also cover different column counts using the official small and large databases. | Hard-coding a set of STR columns or relying on a particular official database shape. |
+| `dna.longest-run` | CSV `name,AC / Ada,3 / Bea,4`, text `ACACACGGAC`, output `Ada`. | Summing separated occurrences to get 4 and incorrectly reporting `Bea`. |
+| `dna.exact-profile` | CSV `name,AC,GT / Bea,2,2 / Ada,2,1`, text `ACACGT`, output `Ada`. | Accepting the first row's partial match and incorrectly reporting `Bea`. |
+| `dna.no-match` | CSV `name,AC,GT / Ada,1,2`, text `ACACGT`, output `No match`. | Silently exiting, printing the wrong message, or returning a person's name when no match exists. |
 
-**验证。** 以真实文件和子进程验证参数顺序、错误分支和标准输出。跑官方文档的 20 组示例，四组使用小库，十六组使用大库。至少保留一正一负的跑通证据，例如小库的 `1.txt → Bob`、`2.txt → No match`，并保存全部用例的状态。题目未要求特定 CSV 库、无效文件恢复或多重完全匹配处理。官方检查 ID 为 `cs50/problems/2026/x/dna`。
+**Validation.** Use real files and subprocesses to check argument order, error branches, and standard output. Run the 20 official documented examples: four with the small database and sixteen with the large database. Retain evidence of at least one positive and one negative result, such as small database `1.txt → Bob` and `2.txt → No match`, and save status for all cases. The task does not require a particular CSV library, recovery from invalid files, or handling multiple exact matches. Official check ID: `cs50/problems/2026/x/dna`.
 
-## 3. 参考与缺陷验收
+## 3. Reference and flaw acceptance
 
-1. 每题先冻结官方来源，再编写参考。记录 Python、CS50 库和 `check50` 的实际版本、运行命令、用例 ID、期望值和观察值。按原作业目录运行匹配的 `check50`；若环境或认证限制，保留受限原因及官方示例本地运行结果，明确两类证据。
-2. 每个候选先按官方要求标注来源小节，再核查参考通过针对性用例，错误行为会得到不同结果。优先采用小幅变体或可独立复算的对照结果。输出格式按原始行核对，避免 `strip()` 隐藏换行或额外字符。口头例子也记录推导、输入和结果。
-3. 针对概念重叠做复核。Cash 的金额转换、硬币选择和余量分别用不同输入区分。DNA 的连续次数、部分匹配和无匹配分别有可区分的 CSV。若同一错误会同时触发几项，标注受影响行为和判分边界。证据不足时在冻结前调整定义。
-4. 每题保留一种正确替代路径的用例证据。例如 Cash 用逐次找零替代 `divmod`，Readability 用字符范围判断替代一个正则，DNA 用 `csv.reader` 替代 `DictReader`。两名研究者核对官方要求、参考行为和五项缺陷，签署版本化清单。连同 Mario 共 20 项。
+1. Freeze official sources before writing each reference. Record actual Python, CS50 library, and `check50` versions, commands, case IDs, expected values, and observed values. Run the matching `check50` from the original assignment directory; if environment or authentication limits this, retain the reason and local results for official examples, clearly distinguishing the two evidence types.
+2. For each candidate, cite the official requirement subsection, then verify that the reference passes the targeted case and the incorrect behavior produces a different result. Prefer small variants or independently reproducible controls. Check raw output lines to prevent `strip()` hiding newlines or extra characters. Record derivations, inputs, and results for verbal examples too.
+3. Review conceptual overlap. Distinguish Cash amount conversion, coin selection, and remainder with separate inputs. Use distinguishable CSVs for DNA consecutive counts, partial matches, and no match. If one error triggers several items, annotate affected behavior and scoring boundaries. Adjust definitions before freezing if evidence is insufficient.
+4. Retain case evidence for one correct alternative per assignment: for example, successive change-making instead of `divmod` for Cash, character-range checks instead of a regular expression for Readability, and `csv.reader` instead of `DictReader` for DNA. Two researchers check official requirements, reference behavior, and five flaws per assignment, and sign a versioned list. Including Mario there are 20 items.
 
-## 4. 生成工程
+## 4. Generation engineering
 
-### 统一入口
+### Unified entry point
 
-- 复用 `matrix.py` 的 `Condition` 和四个维度。新增共用 `build_prompt(condition, generation_input)`，迁移现有 Mario 开发 smoke 的 prompt 拼装逻辑；生成入口接收矩阵条件，覆盖任意已登记作业。建议实现 `python -m rubric_benchmark generate --mode dry-run --config config/experiment.toml --output <new-dir>`，可加 `--assignment` 查看单题。保留现有 `matrix` CLI。
-- 固定英文通用任务说明，要求每个评分项写出应观察的行为或证据、影响得分或等级的表现，并用简明语言写出可供学生理解的反馈。只要求官方规格明确规定的约束，并接受其他合规实现。正文只有该题 canonical spec、该格格式块和可选的示例参考块。三题专属信息来自规格，缺陷清单与合成用例留给评估。
-- `points` 候选要求每项满分、可辨别的部分得分和总分，例如固定 100 分。 `levels` 候选要求每个标准下给出 Meets / Partially Meets / Does Not Meet 的行为描述。两种格式共享覆盖范围。总分、等级名称和确切文本由团队在正式冻结前定稿。格式适配只记录符合情况，有用但格式偏离的输出按预先确定的规则纳入标注。
-- 每次用新的无历史请求。模型槽只决定调用哪个已配置部署。按每格存下 `condition_id`、模板版本、spec/reference SHA-256、最终 prompt 哈希和有效请求参数。保存原始响应、模型及路由元数据、结束原因、用量、UTC 时间、错误与尝试编号。按 [总方案](IMPLEMENTATION_PLAN.md) 实施隔离的 pilot/formal 命名空间及恢复规则。
+- Reuse `Condition` and the four dimensions in `matrix.py`. Add a shared `build_prompt(condition, generation_input)` and migrate the existing Mario development smoke prompt assembly; the generation entry point accepts matrix conditions and covers any registered assignment. Suggested command: `python -m rubric_benchmark generate --mode dry-run --config config/experiment.toml --output <new-dir>`, optionally with `--assignment` for one assignment. Retain the existing `matrix` CLI.
+- Freeze common English task instructions asking each criterion to state observable behavior or evidence, performance affecting points or levels, and concise feedback understandable to students. Require only constraints explicitly stated in the official specification and accept other compliant implementations. The body contains only that assignment's canonical spec, the cell's format block, and an optional example reference block. Assignment-specific information comes from the specification; flaw lists and synthetic cases remain on the evaluation side.
+- The `points` candidate asks for maximum points per criterion, distinguishable partial credit, and a total, such as a fixed 100 points. The `levels` candidate asks for Meets / Partially Meets / Does Not Meet behavior descriptions under each criterion. Both formats share coverage scope. The team finalizes the total, level names, and exact wording before formal freeze. Record format adherence separately; annotate useful but format-deviating outputs under predetermined rules.
+- Use a new request without history each time. The model slot only selects the configured deployment. Save `condition_id`, template version, spec/reference SHA-256, final prompt hash, and effective request parameters per cell. Save raw response, model and routing metadata, finish reason, usage, UTC time, errors, and attempt number. Implement isolated pilot/formal namespaces and recovery rules according to the [overall plan](IMPLEMENTATION_PLAN.md).
 
-### 运行与失败处理
+### Execution and failure handling
 
-- `dry-run` 先验证选定条件和所有所需输入，再按 `condition_id` 输出 manifest 与每格 `input.json`。清单至少包含模式、版本、条件 ID、模板和数据哈希。遇到缺作业包、缺参考或哈希不符时，把错误定位到具体作业和文件，并在任何 API 调用前退出。正式模式要求完整矩阵。
-- 后端适配器负责鉴权、参数映射和原始响应落盘。记录请求模型和返回模型，标明供应商不支持的参数以及无法核实的有效值。将正常响应、空响应、拒答、截断、超时、格式偏离及模型不符分别记录。是否重试由冻结规则决定。重试使用原条件 ID 和新尝试号。
-- 先持久化原始输出、哈希和尝试完成记录，再发布该格结果。恢复时验证清单及输入哈希，跳过已经接受的格。发送状态未知的尝试进入待核对状态，避免重复调用。预检和报告都保留每格完整记录，便于解释失败和缺失。
-- Pilot 可先为每个模型分别选两格，一格 points、一格 levels，一格 spec-only、一格 spec-reference，三题均有代表。用 dry-run 实测长度后，纳入最长的输入场景，再冻结具体六格和预算。人工查看三份作业内容是否被正确引用，并确认截断和格式检查有效。
+- `dry-run` first validates selected conditions and all required inputs, then outputs a manifest and per-cell `input.json` by `condition_id`. The manifest includes at least mode, version, condition IDs, and template and data hashes. Missing packages or references and hash mismatches identify the assignment and file and exit before any API call. Formal mode requires the complete matrix.
+- Backend adapters handle authentication, parameter mapping, and raw response persistence. Record requested and returned models, provider-unsupported parameters, and effective values that cannot be verified. Separately record normal responses, empty responses, refusals, truncation, timeouts, format deviations, and model mismatches. Frozen rules determine retries. Retries use the original condition ID and a new attempt number.
+- Persist raw output, hash, and attempt-completion record before publishing a cell result. On recovery, verify manifest and input hashes and skip accepted cells. Attempts with unknown send status enter a reconciliation state to avoid duplicate calls. Preflight and reports retain complete records for every cell to explain failures and missing data.
+- The pilot may initially select two cells per model, one points and one levels, one spec-only and one spec-reference, representing all three assignments. Measure lengths with dry-run, include the longest input scenario, then freeze the six cells and budget. Manually verify correct use of all three assignment contents and effective truncation and format checks.
 
-### 实施顺序与门槛
+### Implementation order and gates
 
-| 步骤 | 交付 | 验收 |
-| --- | --- | --- |
-| 1 · 冻结课程输入 | 三题 HTML 与规格、来源记录、DNA ZIP 按需归档、四题统一提取规则 | 题名、年度、语言和官方 ID 对齐。源文件、规范文本和实用资产均可按记录复查。 |
-| 2 · 验证参考和评估包 | 三个 `reference.py`、15 项缺陷、证据及复核记录 | 每题通过文档示例和目标用例，5 个 ID 唯一且各有可观察证据。四题共 20 项通过双人复核。 |
-| 3 · 接入离线生成 | 通用 prompt builder、dry-run、mock 输出和实际运行记录 | 三题分别各 12 格，共 36 格；加 Mario 共 48 格。相同作业、上下文和格式跨模型得到同字节消息。24 组上下文对只改变参考块，24 组格式对只改变格式块。 |
-| 4 · 验证隔离和持久化 | 清单、hash 校验、漏读探针、provider mock 及失败记录 | 只有 spec 的请求内容不含 reference。移除评估目录后生成仍能运行。将独有字串放入缺陷和证据文件后，实际 mock 请求中无该字串。改动一个输入字节会触发哈希校验失败。mock 全矩阵可生成并追溯每格结果。 |
-| 5 · Pilot 与正式冻结 | exact 模型 ID、运行预算、原始样稿、代码本、协议签署 | 团队批准预算后，按总方案最多六次 live pilot，覆盖三个部署、两种上下文和两种格式，加入实际测得最长的输入。核对返回部署、截断和格式，再冻结四题、模板、部署及代码本。pilot 使用独立目录。 |
-| 6 · 正式生成及评价 | 48 格结果清单、两人独立批注、仲裁和描述性结果 | 每格最多一份接受的 rubric；失败有独立状态。每位研究者最多完成 240 个缺陷评分和 48 个实现偏差判断。保存两份原始判断后计算加权 Cohen’s κ，再仲裁。 |
+| Step | Deliverable | Acceptance |
+|---|---|---|
+| 1 · Freeze course inputs | Three HTML pages and specifications, provenance records, DNA ZIP archived as needed, and common extraction rule for four assignments | Titles, year, language, and official IDs agree. Source files, canonical text, and usable assets can be rechecked against records. |
+| 2 · Validate references and evaluation packages | Three `reference.py` files, 15 flaws, evidence, and review records | Each assignment passes documented examples and targeted cases; five unique IDs each have observable evidence. All 20 items across four assignments pass two-person review. |
+| 3 · Connect offline generation | Common prompt builder, dry-run, mock outputs, and actual run records | Twelve cells for each of three assignments, 36 total; 48 with Mario. Identical assignment, context, and format produce identical message bytes across models. Each of 24 context pairs changes only the reference block; each of 24 format pairs changes only the format block. |
+| 4 · Verify isolation and persistence | Manifest, hash checks, leakage probes, provider mock, and failure records | Spec-only requests contain no reference. Generation still runs after removing the evaluation directory. A unique string placed in flaw and evidence files is absent from actual mock requests. Changing one input byte triggers hash failure. A full-matrix mock can generate and trace each result. |
+| 5 · Pilot and formal freeze | Exact model IDs, run budget, raw drafts, codebook, and protocol sign-off | After team budget approval, run at most six live pilot calls under the overall plan, covering three deployments, both contexts and formats, and the measured longest input. Check returned deployments, truncation, and format, then freeze four assignments, templates, deployments, and codebook. Use a separate pilot directory. |
+| 6 · Formal generation and evaluation | 48-cell result manifest, two independent annotations, adjudication, and descriptive results | At most one accepted rubric per cell; failures have separate statuses. Each researcher completes at most 240 flaw ratings and 48 implementation-bias judgments. Save both original judgments before calculating weighted Cohen’s κ, then adjudicate. |
 
-## 5. 如何判断 rubric 对教师和学生有用
+## 5. Assessing rubric usefulness to teachers and students
 
-评分对象是 rubric 明示的检查能力。对于 Cash，笼统要求“正确处理输入”可评 1 分，明确要求“负数后反复重新询问，直至获得非负值”可评 2 分。缺少适用评分项则评 0 分。Readability 和 DNA 共用同一标准，证据可引用 rubric 条目或多个条目的组合。
+Score the checks explicitly stated in the rubric. For Cash, a general requirement to “handle input correctly” can score 1; explicitly requiring repeated prompts after negative input until a nonnegative value is obtained can score 2. If no applicable criterion exists, score 0. Readability and DNA use the same standard; evidence may cite one rubric item or a combination of items.
 
-每份 rubric 另做一次实施偏差判断。若强制 Cash 使用 `divmod`、Readability 必须用某个正则、DNA 必须使用 `DictReader`，记录违规条目、官方依据和可验证的正确替代路径。显式要求的 CS50 输入函数按规格处理。
+Make one additional implementation-bias judgment per rubric. If it mandates `divmod` for Cash, a particular regular expression for Readability, or `DictReader` for DNA, record the offending criterion, official evidence, and a verifiable correct alternative. Handle explicitly required CS50 input functions according to the specification.
 
-报告每份 rubric 的五项平均覆盖分（0–2）、显式覆盖比例（评分为 2 的比例）、实现偏差，以及各实验条件下的结果与缺失量。报告示例应让教师看得出哪些条目可执行、哪些反馈对学生说清了问题。单次 rubric 文本研究提供覆盖与评分一致性证据。实际评分准确性、时间节约和学生学习收益需要后续独立验证。
+Report each rubric's mean coverage across five flaws (0–2), explicit coverage proportion (proportion scored 2), implementation bias, and results and missing data by experimental condition. Report examples should show teachers which criteria are actionable and which feedback explains the problem to students. A single rubric-text study provides evidence of coverage and scoring consistency. Actual grading accuracy, time savings, and student learning gains require later independent validation.
